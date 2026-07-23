@@ -1,0 +1,69 @@
+# shop-pets — Tienda Shopify + landings convertibles
+
+Este repositorio conecta el **tema de Shopify** de la tienda con GitHub. Desde
+aquí se editan las secciones y plantillas del tema, y Shopify sincroniza los
+cambios automáticamente al tema de la tienda.
+
+El objetivo principal: poder pasar la **URL de un producto** y generar una
+**landing altamente convertible** para ese producto, sobre el tema real de la
+tienda.
+
+---
+
+## 🔒 Seguridad primero
+
+- **Nunca** se comparte usuario/contraseña de Shopify en este repo ni en el chat.
+- La conexión se hace por la **integración oficial GitHub de Shopify** (no requiere contraseña).
+- Todo el trabajo se hace sobre **código del tema**, revisable en cada commit.
+
+---
+
+## 1. Conectar el tema de Shopify a este repo (una sola vez)
+
+Se puede hacer desde el navegador del móvil:
+
+1. Entra a tu **Shopify Admin** → **Online Store** → **Themes**.
+2. En **Add theme** (o el menú `···` de un tema) elige **Connect from GitHub**.
+3. Autoriza la app de Shopify en GitHub si te lo pide.
+4. Selecciona:
+   - **Repositorio:** `boryeta/shop-pets`
+   - **Rama (branch):** `claude/shopify-mobile-account-access-ryj20x`
+5. Confirma. Shopify **añadirá los archivos del tema** a esta rama.
+
+> Al conectar una rama sin archivos de tema, Shopify sube tu tema actual a la
+> rama. A partir de ahí, cada push a la rama se refleja en ese tema.
+
+**Recomendación:** conecta primero una **copia/duplicado** de tu tema (no el
+tema en vivo) para probar los cambios con tranquilidad antes de publicarlos.
+
+---
+
+## 2. Flujo para crear una landing de un producto
+
+1. Me pasas la **URL del producto**, por ejemplo:
+   `https://tu-tienda.myshopify.com/products/nombre-del-producto`
+2. Leo los datos públicos del producto desde `.../products/nombre.json`
+   (título, precio, imágenes, variantes, descripción).
+3. Genero/actualizo la plantilla y secciones de la landing en el tema.
+4. Hago push a la rama y Shopify sincroniza el cambio.
+5. Tú revisas la landing en la vista previa del tema y publicas cuando quieras.
+
+### Qué incluye una landing convertible (checklist de diseño)
+
+- **Hero** claro: propuesta de valor + imagen del producto + CTA visible.
+- **Prueba social**: reseñas, valoraciones, "X clientes".
+- **Beneficios** (no solo características) con iconos.
+- **Galería** del producto y detalles ampliables.
+- **Bloque de confianza**: envíos, garantía, devoluciones, pagos seguros.
+- **FAQ** para resolver objeciones.
+- **CTA repetido** (sticky en móvil) que va directo al checkout.
+- **Optimización móvil** primero (la mayoría del tráfico es móvil).
+
+---
+
+## Estructura
+
+Cuando el tema esté conectado, aparecerán las carpetas estándar de Shopify
+(`sections/`, `templates/`, `snippets/`, `assets/`, `config/`, `locales/`,
+`layout/`). Las landings vivirán como plantillas de producto/página dedicadas
+para no afectar al resto de la tienda.
