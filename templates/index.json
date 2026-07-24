@@ -33,7 +33,7 @@
         "gallery_layout": "stacked",
         "enable_sticky_info": true,
         "padding_top": 36,
-        "padding_bottom": 12
+        "padding_bottom": 8
       }
     },
     "trust_bar": {
