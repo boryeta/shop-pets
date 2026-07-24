@@ -15,6 +15,9 @@
   if sticky_product == blank and section.settings.product != blank
     assign sticky_product = section.settings.product
   endif
+  if sticky_product == blank
+    assign sticky_product = collections.all.products.first
+  endif
 -%}
 <div class="landing-sticky color-{{ section.settings.color_scheme }}" id="LandingSticky-{{ section.id }}">
   <div class="landing-sticky__inner">

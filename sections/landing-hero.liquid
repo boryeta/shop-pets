@@ -1,0 +1,159 @@
+{%- liquid
+  assign hero_product = section.settings.product
+  if hero_product == blank
+    assign hero_product = collections.all.products.first
+  endif
+-%}
+{%- style -%}
+  .lhero-{{ section.id }} { padding-top: {{ section.settings.padding_top | times: 0.7 | round: 0 }}px; padding-bottom: {{ section.settings.padding_bottom | times: 0.7 | round: 0 }}px; }
+  .lhero__grid { display:grid; grid-template-columns:1fr; gap:2.4rem; align-items:start; }
+  .lhero__media img { width:100%; height:auto; border-radius:{{ settings.card_corner_radius | default: 16 }}px; display:block; }
+  .lhero__thumbs { display:flex; gap:.8rem; margin-top:1rem; flex-wrap:wrap; }
+  .lhero__thumbs button { padding:0; border:2px solid transparent; border-radius:10px; background:none; cursor:pointer; width:64px; height:64px; overflow:hidden; }
+  .lhero__thumbs button.is-active { border-color:rgb(var(--color-button)); }
+  .lhero__thumbs img { width:100%; height:100%; object-fit:cover; }
+  .lhero__badge { display:inline-block; background:#e11d48; color:#fff; font-weight:700; font-size:1.3rem; padding:.4rem 1rem; border-radius:100px; margin-bottom:1rem; }
+  .lhero__title { font-size:3.2rem; line-height:1.1; margin:0 0 1rem; }
+  .lhero__stars { color:#ffb400; display:flex; align-items:center; gap:.4rem; margin-bottom:1.4rem; font-size:1.4rem; }
+  .lhero__stars .rev { color:rgb(var(--color-foreground)); opacity:.7; margin-left:.4rem; }
+  .lhero__price { display:flex; align-items:baseline; gap:1rem; margin-bottom:1.6rem; }
+  .lhero__price .now { font-size:3rem; font-weight:700; }
+  .lhero__price .was { font-size:1.9rem; opacity:.55; text-decoration:line-through; }
+  .lhero__price .save { font-size:1.4rem; color:#e11d48; font-weight:600; }
+  .lhero__desc { opacity:.85; line-height:1.55; margin-bottom:2rem; }
+  .lhero__form { display:flex; flex-direction:column; gap:1.2rem; }
+  .lhero__form select, .lhero__form input[type=number] { padding:1.2rem; border:1px solid rgba(var(--color-foreground),.2); border-radius:8px; font-size:1.5rem; background:rgb(var(--color-background)); color:rgb(var(--color-foreground)); width:100%; }
+  .lhero__atc { width:100%; min-height:5.2rem; font-size:1.7rem; }
+  .lhero__pay { margin-top:.4rem; }
+  .lhero__usps { list-style:none; margin:2rem 0 0; padding:0; display:grid; gap:.8rem; }
+  .lhero__usps li { display:flex; align-items:center; gap:.8rem; font-size:1.4rem; }
+  .lhero__usps svg { color:rgb(var(--color-button)); flex-shrink:0; }
+  .lhero__empty { text-align:center; padding:4rem 2rem; border:2px dashed rgba(var(--color-foreground),.2); border-radius:16px; }
+  @media screen and (min-width:750px){
+    .lhero-{{ section.id }} { padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px; }
+    .lhero__grid { grid-template-columns:1.1fr 1fr; gap:4rem; }
+    .lhero__title { font-size:4.2rem; }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} isolate">
+  <div class="lhero-{{ section.id }} page-width">
+    {%- if hero_product != blank -%}
+      <div class="lhero__grid">
+        {%- comment -%} ---------- MEDIA ---------- {%- endcomment -%}
+        <div class="lhero__media">
+          {%- if hero_product.featured_image -%}
+            <img id="lhero-main-{{ section.id }}" src="{{ hero_product.featured_image | image_url: width: 900 }}" alt="{{ hero_product.featured_image.alt | escape }}" width="900" height="900" loading="eager">
+          {%- endif -%}
+          {%- if hero_product.images.size > 1 -%}
+            <div class="lhero__thumbs">
+              {%- for image in hero_product.images limit: 5 -%}
+                <button type="button" class="{% if forloop.first %}is-active{% endif %}" data-src="{{ image | image_url: width: 900 }}" onclick="var m=document.getElementById('lhero-main-{{ section.id }}'); m.src=this.dataset.src; this.parentNode.querySelectorAll('button').forEach(function(b){b.classList.remove('is-active')}); this.classList.add('is-active');">
+                  <img src="{{ image | image_url: width: 140 }}" alt="" width="64" height="64" loading="lazy">
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} ---------- INFO / BUY BOX ---------- {%- endcomment -%}
+        <div class="lhero__info">
+          {%- if hero_product.compare_at_price > hero_product.price -%}
+            {%- assign save_pct = hero_product.compare_at_price | minus: hero_product.price | times: 100 | divided_by: hero_product.compare_at_price -%}
+            <span class="lhero__badge">OFERTA -{{ save_pct }}%</span>
+          {%- endif -%}
+          <h1 class="lhero__title">{{ hero_product.title | escape }}</h1>
+          <div class="lhero__stars">
+            {% for i in (1..5) %}{% render 'landing-icon', icon: 'star', size: 18 %}{% endfor %}
+            <span class="rev">{{ section.settings.reviews_text }}</span>
+          </div>
+          <div class="lhero__price">
+            <span class="now">{{ hero_product.price | money }}</span>
+            {%- if hero_product.compare_at_price > hero_product.price -%}
+              <span class="was">{{ hero_product.compare_at_price | money }}</span>
+              <span class="save">¡Ahorras {{ hero_product.compare_at_price | minus: hero_product.price | money }}!</span>
+            {%- endif -%}
+          </div>
+          {%- if hero_product.description != blank -%}
+            <div class="lhero__desc">{{ hero_product.description | strip_html | truncatewords: 40 }}</div>
+          {%- endif -%}
+
+          {%- form 'product', hero_product, id: 'lhero-form-{{ section.id }}', class: 'lhero__form' -%}
+            {%- if hero_product.variants.size > 1 -%}
+              <select name="id">
+                {%- for variant in hero_product.variants -%}
+                  <option value="{{ variant.id }}" {% unless variant.available %}disabled{% endunless %}>
+                    {{ variant.title }} — {{ variant.price | money }}{% unless variant.available %} (agotado){% endunless %}
+                  </option>
+                {%- endfor -%}
+              </select>
+            {%- else -%}
+              <input type="hidden" name="id" value="{{ hero_product.selected_or_first_available_variant.id }}">
+            {%- endif -%}
+            <input type="number" name="quantity" value="1" min="1" aria-label="Cantidad">
+            <button type="submit" name="add" class="lhero__atc button button--primary" {% unless hero_product.available %}disabled{% endunless %}>
+              {%- if hero_product.available -%}{{ section.settings.button_label | escape }}{%- else -%}Agotado{%- endif -%}
+            </button>
+            {%- if section.settings.show_dynamic_checkout -%}
+              <div class="lhero__pay">{{ form | payment_button }}</div>
+            {%- endif -%}
+          {%- endform -%}
+
+          <ul class="lhero__usps">
+            {%- for block in section.blocks -%}
+              <li {{ block.shopify_attributes }}>{% render 'landing-icon', icon: block.settings.icon, size: 20 %}<span>{{ block.settings.text | escape }}</span></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="lhero__empty">
+        <h2 class="title h1">Aún no hay ningún producto</h2>
+        <p>Crea un producto en tu tienda (Products → Add product) y esta portada lo mostrará automáticamente.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Landing · Hero producto",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "paragraph", "content": "Si no eliges un producto abajo, se mostrará automáticamente el primer producto de tu tienda." },
+    { "type": "product", "id": "product", "label": "Producto (opcional)" },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Añadir al carrito" },
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Mostrar botón de pago rápido (PayPal, etc.)", "default": true },
+    { "type": "text", "id": "reviews_text", "label": "Texto de reseñas", "default": "4,9/5 · +1.200 reseñas" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Esquema de color", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Espaciado superior", "default": 44 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Espaciado inferior", "default": 36 }
+  ],
+  "blocks": [
+    {
+      "type": "usp",
+      "name": "Ventaja (bajo el botón)",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icono", "default": "truck",
+          "options": [
+            {"value":"truck","label":"Camión"},{"value":"shield","label":"Escudo"},{"value":"refresh","label":"Devolución"},
+            {"value":"heart","label":"Corazón"},{"value":"paw","label":"Huella"},{"value":"clock","label":"Reloj"},{"value":"leaf","label":"Hoja"}
+          ] },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Envío gratis en 24-48h" }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Landing · Hero producto",
+      "blocks": [
+        { "type": "usp", "settings": { "icon": "truck", "text": "Envío gratis en 24-48h" } },
+        { "type": "usp", "settings": { "icon": "refresh", "text": "Devolución gratuita en 30 días" } },
+        { "type": "usp", "settings": { "icon": "shield", "text": "Pago 100% seguro" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

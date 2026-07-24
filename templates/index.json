@@ -1,39 +1,19 @@
 {
   "sections": {
-    "featured_product": {
-      "type": "featured-product",
+    "hero": {
+      "type": "landing-hero",
       "blocks": {
-        "title": { "type": "title" },
-        "reviews": {
-          "type": "text",
-          "settings": { "text": "<p>⭐⭐⭐⭐⭐ 4,9/5 · +1.200 clientes satisfechos</p>", "text_style": "body" }
-        },
-        "price": { "type": "price" },
-        "variant_picker": { "type": "variant_picker", "settings": { "picker_type": "button" } },
-        "quantity_selector": { "type": "quantity_selector" },
-        "buy_buttons": { "type": "buy_buttons", "settings": { "show_dynamic_checkout": true } },
-        "description": { "type": "description" }
+        "u1": { "type": "usp", "settings": { "icon": "truck", "text": "Envío gratis en 24-48h" } },
+        "u2": { "type": "usp", "settings": { "icon": "refresh", "text": "Devolución gratuita en 30 días" } },
+        "u3": { "type": "usp", "settings": { "icon": "shield", "text": "Pago 100% seguro" } }
       },
-      "block_order": [
-        "title",
-        "reviews",
-        "price",
-        "variant_picker",
-        "quantity_selector",
-        "buy_buttons",
-        "description"
-      ],
+      "block_order": ["u1", "u2", "u3"],
       "settings": {
         "product": "",
-        "color_scheme": "scheme-1",
-        "media_position": "left",
-        "media_size": "large",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "gallery_layout": "stacked",
-        "enable_sticky_info": true,
-        "padding_top": 36,
-        "padding_bottom": 8
+        "button_label": "Añadir al carrito",
+        "show_dynamic_checkout": true,
+        "reviews_text": "4,9/5 · +1.200 reseñas",
+        "color_scheme": "scheme-1"
       }
     },
     "trust_bar": {
@@ -96,7 +76,7 @@
     "sticky_atc": { "type": "landing-sticky-atc", "settings": { "product": "" } }
   },
   "order": [
-    "featured_product",
+    "hero",
     "trust_bar",
     "benefits",
     "steps",
