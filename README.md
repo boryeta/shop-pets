@@ -61,6 +61,42 @@ tema en vivo) para probar los cambios con tranquilidad antes de publicarlos.
 
 ---
 
+## Plantilla de landing incluida: `product.landing`
+
+Ya hay una **landing de conversión lista** para producto único (pensada para la
+snuffle mat / alfombra olfativa, y reutilizable para cualquier producto).
+
+**Cómo usarla en Shopify:**
+
+1. Crea el producto en Shopify (o impórtalo desde AliExpress con **DSers** o **CJ**).
+   Sube buenas imágenes, pon el precio y el **precio comparado** (para mostrar el
+   descuento tachado).
+2. En el producto → **Theme template** → elige **`landing`**.
+3. Abre el **editor de temas** (Customize) sobre ese producto para ajustar textos,
+   reseñas, FAQ, garantía y colores. Todo es editable, sin tocar código.
+
+**Qué incluye la landing (en este orden):**
+
+- Caja de compra real de Dawn (galería, variantes, cantidad, **Add to cart** y
+  checkout dinámico) + valoración en estrellas.
+- **Barra de confianza** (envío, pago seguro, devoluciones).
+- **Beneficios** (problema → solución) con iconos.
+- **Cómo funciona** en 3 pasos.
+- **Reseñas** con estrellas.
+- **Garantía 30 días + CTA** que lleva al botón de compra.
+- **FAQ** desplegable (rebate de objeciones).
+- Productos relacionados.
+- **Barra de compra fija en móvil** (sticky) que aparece al hacer scroll.
+
+**Secciones nuevas** (todas con el prefijo `Landing ·` en el editor):
+`landing-trust-bar`, `landing-benefits`, `landing-steps`,
+`landing-testimonials`, `landing-guarantee`, `landing-faq`,
+`landing-sticky-atc`, y el snippet `landing-icon`.
+
+> Los textos vienen rellenos con copy orientado a conversión para la snuffle mat.
+> El precio, título e imágenes salen del **producto de Shopify**, no están escritos
+> en el código.
+
 ## Estructura
 
 Cuando el tema esté conectado, aparecerán las carpetas estándar de Shopify

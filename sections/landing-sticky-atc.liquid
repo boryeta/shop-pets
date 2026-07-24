@@ -1,0 +1,57 @@
+{%- style -%}
+  .landing-sticky { position:fixed; left:0; right:0; bottom:0; z-index:6; transform:translateY(110%); transition:transform .28s ease; box-shadow:0 -4px 20px rgba(0,0,0,.12); }
+  .landing-sticky.is-visible { transform:translateY(0); }
+  .landing-sticky__inner { display:flex; align-items:center; gap:1.2rem; padding:1rem 1.5rem; }
+  .landing-sticky__info { flex:1; min-width:0; }
+  .landing-sticky__title { font-weight:600; font-size:1.4rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .landing-sticky__price { font-size:1.5rem; font-weight:700; }
+  .landing-sticky__price s { opacity:.55; font-weight:400; margin-right:.6rem; }
+  .landing-sticky__btn { white-space:nowrap; min-height:4.4rem; padding:0 2.4rem; }
+  @media screen and (min-width:750px){ .landing-sticky { display:none; } }
+{%- endstyle -%}
+
+<div class="landing-sticky color-{{ section.settings.color_scheme }}" id="LandingSticky-{{ section.id }}">
+  <div class="landing-sticky__inner">
+    <div class="landing-sticky__info">
+      <div class="landing-sticky__title">{{ product.title | default: 'Tu producto' | escape }}</div>
+      <div class="landing-sticky__price">
+        {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s>{%- endif -%}
+        {{ product.price | default: 0 | money }}
+      </div>
+    </div>
+    <button type="button" class="landing-sticky__btn button button--primary" data-landing-scroll>{{ section.settings.button_label | escape }}</button>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var bar = document.getElementById('LandingSticky-{{ section.id }}');
+    if (!bar) return;
+    bar.querySelectorAll('[data-landing-scroll]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var t = document.querySelector('product-form') || document.querySelector('#MainProduct') || document.querySelector('.product');
+        if (t) t.scrollIntoView({ behavior:'smooth', block:'center' });
+      });
+    });
+    function onScroll(){
+      if (window.scrollY > {{ section.settings.show_after }}) bar.classList.add('is-visible');
+      else bar.classList.remove('is-visible');
+    }
+    window.addEventListener('scroll', onScroll, { passive:true });
+    onScroll();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Landing · Barra compra móvil",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Comprar" },
+    { "type": "range", "id": "show_after", "min": 200, "max": 1200, "step": 50, "unit": "px", "label": "Mostrar tras desplazar", "default": 500 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Esquema de color", "default": "scheme-1" }
+  ],
+  "presets": [ { "name": "Landing · Barra compra móvil" } ]
+}
+{% endschema %}

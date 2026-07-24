@@ -1,0 +1,82 @@
+{%- style -%}
+  .landing-benefits-{{ section.id }} { padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px; padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px; }
+  .landing-benefits__head { text-align:center; max-width:70rem; margin:0 auto 3rem; }
+  .landing-benefits__head p { margin-top:1rem; opacity:.8; }
+  .landing-benefits__grid { display:grid; grid-template-columns:1fr; gap:2.4rem; }
+  .landing-benefit { text-align:center; padding:2rem 1.6rem; border-radius:{{ settings.card_corner_radius | default: 12 }}px; background:rgba(var(--color-foreground),.03); }
+  .landing-benefit__icon { display:inline-flex; align-items:center; justify-content:center; width:60px; height:60px; border-radius:50%; background:rgb(var(--color-button)); color:rgb(var(--color-button-text)); margin-bottom:1.4rem; }
+  .landing-benefit__title { font-size:1.9rem; margin:0 0 .6rem; }
+  .landing-benefit__text { opacity:.85; line-height:1.5; }
+  @media screen and (min-width:750px){
+    .landing-benefits-{{ section.id }} { padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px; }
+    .landing-benefits__grid { grid-template-columns: repeat({{ section.settings.columns }},1fr); }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} isolate">
+  <div class="landing-benefits-{{ section.id }} page-width">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="landing-benefits__head">
+        {%- if section.settings.heading != blank -%}<h2 class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2>{%- endif -%}
+        {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading | escape }}</p>{%- endif -%}
+      </div>
+    {%- endif -%}
+    <div class="landing-benefits__grid">
+      {%- for block in section.blocks -%}
+        <div class="landing-benefit" {{ block.shopify_attributes }}>
+          <span class="landing-benefit__icon">{% render 'landing-icon', icon: block.settings.icon, size: 30 %}</span>
+          <h3 class="landing-benefit__title">{{ block.settings.title | escape }}</h3>
+          <p class="landing-benefit__text">{{ block.settings.text | escape }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Landing · Beneficios",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Por qué tu perro la necesita" },
+    { "type": "select", "id": "heading_size", "label": "Tamaño del título", "default": "h1",
+      "options": [{"value":"h2","label":"Pequeño"},{"value":"h1","label":"Mediano"},{"value":"h0","label":"Grande"}] },
+    { "type": "text", "id": "subheading", "label": "Subtítulo", "default": "Una solución natural al aburrimiento y la ansiedad, respaldada por el instinto de forrajeo." },
+    { "type": "range", "id": "columns", "min": 2, "max": 4, "step": 1, "label": "Columnas (escritorio)", "default": 3 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Esquema de color", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Espaciado superior", "default": 52 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Espaciado inferior", "default": 52 }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icono", "default": "brain",
+          "options": [
+            {"value":"brain","label":"Cerebro"},{"value":"heart","label":"Corazón"},{"value":"clock","label":"Reloj"},
+            {"value":"paw","label":"Huella"},{"value":"wash","label":"Lavable"},{"value":"leaf","label":"Hoja"},
+            {"value":"shield","label":"Escudo"},{"value":"star","label":"Estrella"}
+          ] },
+        { "type": "text", "id": "title", "label": "Título", "default": "Reduce la ansiedad" },
+        { "type": "textarea", "id": "text", "label": "Texto", "default": "El olfateo libera endorfinas y calma a tu mascota de forma natural." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Landing · Beneficios",
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "brain", "title": "Estimula su mente", "text": "Convierte la comida en un juego de olfato que activa su instinto natural de forrajeo." } },
+        { "type": "benefit", "settings": { "icon": "heart", "title": "Reduce la ansiedad", "text": "Olfatear libera endorfinas: menos estrés, menos ladridos y menos destrozos en casa." } },
+        { "type": "benefit", "settings": { "icon": "clock", "title": "Come más despacio", "text": "Ralentiza la ingesta y mejora la digestión evitando que engulla la comida." } },
+        { "type": "benefit", "settings": { "icon": "wash", "title": "Fácil de lavar", "text": "Material apto para lavadora: lista para usar de nuevo en minutos." } },
+        { "type": "benefit", "settings": { "icon": "paw", "title": "Para perros y gatos", "text": "Apta para cualquier tamaño y raza. Diversión garantizada para toda la casa." } },
+        { "type": "benefit", "settings": { "icon": "leaf", "title": "Material seguro", "text": "Tejido suave y no tóxico, pensado para el contacto diario con tu mascota." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

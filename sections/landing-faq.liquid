@@ -1,0 +1,69 @@
+{%- style -%}
+  .landing-faq-{{ section.id }} { padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px; padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px; }
+  .landing-faq__wrap { max-width:74rem; margin:0 auto; }
+  .landing-faq__head { text-align:center; margin-bottom:2.4rem; }
+  .landing-faq__item { border-bottom:1px solid rgba(var(--color-foreground),.12); }
+  .landing-faq__item summary { list-style:none; cursor:pointer; padding:1.8rem 0; display:flex; justify-content:space-between; align-items:center; gap:1rem; font-size:1.7rem; font-weight:600; }
+  .landing-faq__item summary::-webkit-details-marker { display:none; }
+  .landing-faq__item summary::after { content:'+'; font-size:2.4rem; font-weight:400; line-height:1; transition:transform .2s; }
+  .landing-faq__item[open] summary::after { content:'–'; }
+  .landing-faq__answer { padding:0 0 1.8rem; opacity:.85; line-height:1.6; }
+  @media screen and (min-width:750px){
+    .landing-faq-{{ section.id }} { padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px; }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} isolate">
+  <div class="landing-faq-{{ section.id }} page-width">
+    <div class="landing-faq__wrap">
+      {%- if section.settings.heading != blank -%}
+        <div class="landing-faq__head"><h2 class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2></div>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        <details class="landing-faq__item" {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.question | escape }}</summary>
+          <div class="landing-faq__answer">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Landing · Preguntas frecuentes",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Preguntas frecuentes" },
+    { "type": "select", "id": "heading_size", "label": "Tamaño del título", "default": "h1",
+      "options": [{"value":"h2","label":"Pequeño"},{"value":"h1","label":"Mediano"},{"value":"h0","label":"Grande"}] },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Esquema de color", "default": "scheme-2" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Espaciado superior", "default": 52 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Espaciado inferior", "default": 52 }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Pregunta",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Pregunta", "default": "¿Es apta para lavadora?" },
+        { "type": "richtext", "id": "answer", "label": "Respuesta", "default": "<p>Sí. Puedes lavarla a máquina en frío y dejarla secar al aire.</p>" }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Landing · Preguntas frecuentes",
+      "blocks": [
+        { "type": "question", "settings": { "question": "¿Sirve para cualquier raza o tamaño?", "answer": "<p>Sí. Es apta para perros y gatos de cualquier tamaño. Los más grandes simplemente encontrarán los premios más rápido.</p>" } },
+        { "type": "question", "settings": { "question": "¿Es fácil de limpiar?", "answer": "<p>Muchísimo. Es apta para lavadora en frío; sacúdela y déjala secar al aire. Lista para el siguiente uso.</p>" } },
+        { "type": "question", "settings": { "question": "¿Cuánto tiempo la usa mi mascota?", "answer": "<p>Recomendamos sesiones de 10 a 20 minutos. Es ideal antes de que te vayas de casa para dejarla relajada.</p>" } },
+        { "type": "question", "settings": { "question": "¿Cuánto tarda el envío?", "answer": "<p>Preparamos tu pedido en 24-48 h y lo recibes en pocos días. Te enviamos el número de seguimiento por email.</p>" } },
+        { "type": "question", "settings": { "question": "¿Y si no le gusta a mi mascota?", "answer": "<p>Tienes 30 días para devolverla. Si no queda encantada, te devolvemos el dinero.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,68 @@
+{%- style -%}
+  .landing-steps-{{ section.id }} { padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px; padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px; }
+  .landing-steps__head { text-align:center; margin-bottom:3rem; }
+  .landing-steps__grid { display:grid; grid-template-columns:1fr; gap:2.6rem; counter-reset: step; }
+  .landing-step { position:relative; text-align:center; padding-top:1rem; }
+  .landing-step__num { counter-increment: step; display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:50%; background:rgb(var(--color-button)); color:rgb(var(--color-button-text)); font-size:2.2rem; font-weight:700; margin-bottom:1.4rem; }
+  .landing-step__num::before { content: counter(step); }
+  .landing-step__title { font-size:1.9rem; margin:0 0 .6rem; }
+  .landing-step__text { opacity:.85; line-height:1.5; }
+  @media screen and (min-width:750px){
+    .landing-steps-{{ section.id }} { padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px; }
+    .landing-steps__grid { grid-template-columns: repeat({{ section.blocks.size }},1fr); }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} isolate">
+  <div class="landing-steps-{{ section.id }} page-width">
+    {%- if section.settings.heading != blank -%}
+      <div class="landing-steps__head"><h2 class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2></div>
+    {%- endif -%}
+    <div class="landing-steps__grid">
+      {%- for block in section.blocks -%}
+        <div class="landing-step" {{ block.shopify_attributes }}>
+          <span class="landing-step__num"></span>
+          <h3 class="landing-step__title">{{ block.settings.title | escape }}</h3>
+          <p class="landing-step__text">{{ block.settings.text | escape }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Landing · Cómo funciona",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Cómo funciona" },
+    { "type": "select", "id": "heading_size", "label": "Tamaño del título", "default": "h1",
+      "options": [{"value":"h2","label":"Pequeño"},{"value":"h1","label":"Mediano"},{"value":"h0","label":"Grande"}] },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Esquema de color", "default": "scheme-2" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Espaciado superior", "default": 52 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Espaciado inferior", "default": 52 }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Paso",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Esconde la comida" },
+        { "type": "textarea", "id": "text", "label": "Texto", "default": "Reparte premios o pienso entre los pliegues de la alfombra." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Landing · Cómo funciona",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Esconde la comida", "text": "Reparte premios o pienso entre los pliegues de tela de la alfombra." } },
+        { "type": "step", "settings": { "title": "Deja que olfatee", "text": "Tu mascota usa su olfato para encontrar cada bocado: pura estimulación." } },
+        { "type": "step", "settings": { "title": "Mascota feliz y tranquila", "text": "Después del reto queda relajada, saciada y sin aburrimiento." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,84 @@
+{%- style -%}
+  .landing-rev-{{ section.id }} { padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px; padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px; }
+  .landing-rev__head { text-align:center; margin-bottom:2.4rem; }
+  .landing-rev__stars { display:flex; justify-content:center; gap:.2rem; color:#ffb400; margin-top:.8rem; }
+  .landing-rev__summary { margin-top:.8rem; opacity:.8; font-size:1.4rem; }
+  .landing-rev__grid { display:grid; grid-template-columns:1fr; gap:2rem; }
+  .landing-rev__card { padding:2.2rem; border-radius:{{ settings.card_corner_radius | default: 12 }}px; background:rgba(var(--color-foreground),.04); border:1px solid rgba(var(--color-foreground),.06); display:flex; flex-direction:column; gap:1rem; }
+  .landing-rev__card-stars { display:flex; gap:.2rem; color:#ffb400; }
+  .landing-rev__text { line-height:1.55; }
+  .landing-rev__who { display:flex; align-items:center; gap:.8rem; margin-top:auto; }
+  .landing-rev__avatar { width:40px; height:40px; border-radius:50%; background:rgb(var(--color-button)); color:rgb(var(--color-button-text)); display:flex; align-items:center; justify-content:center; font-weight:700; text-transform:uppercase; }
+  .landing-rev__name { font-weight:600; }
+  .landing-rev__badge { font-size:1.2rem; opacity:.7; }
+  @media screen and (min-width:750px){
+    .landing-rev-{{ section.id }} { padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px; }
+    .landing-rev__grid { grid-template-columns: repeat({{ section.settings.columns }},1fr); }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} isolate">
+  <div class="landing-rev-{{ section.id }} page-width">
+    <div class="landing-rev__head">
+      {%- if section.settings.heading != blank -%}<h2 class="title {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2>{%- endif -%}
+      <div class="landing-rev__stars">{% for i in (1..5) %}{% render 'landing-icon', icon: 'star', size: 22 %}{% endfor %}</div>
+      {%- if section.settings.summary != blank -%}<div class="landing-rev__summary">{{ section.settings.summary | escape }}</div>{%- endif -%}
+    </div>
+    <div class="landing-rev__grid">
+      {%- for block in section.blocks -%}
+        <div class="landing-rev__card" {{ block.shopify_attributes }}>
+          <div class="landing-rev__card-stars">{% for i in (1..block.settings.stars) %}{% render 'landing-icon', icon: 'star', size: 18 %}{% endfor %}</div>
+          <p class="landing-rev__text">"{{ block.settings.text | escape }}"</p>
+          <div class="landing-rev__who">
+            <span class="landing-rev__avatar">{{ block.settings.name | slice: 0 }}</span>
+            <span>
+              <span class="landing-rev__name">{{ block.settings.name | escape }}</span><br>
+              {%- if block.settings.badge != blank -%}<span class="landing-rev__badge">{{ block.settings.badge | escape }}</span>{%- endif -%}
+            </span>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Landing · Reseñas",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Lo que dicen los dueños" },
+    { "type": "select", "id": "heading_size", "label": "Tamaño del título", "default": "h1",
+      "options": [{"value":"h2","label":"Pequeño"},{"value":"h1","label":"Mediano"},{"value":"h0","label":"Grande"}] },
+    { "type": "text", "id": "summary", "label": "Resumen de valoración", "default": "4,9/5 · basado en 1.283 reseñas verificadas" },
+    { "type": "range", "id": "columns", "min": 2, "max": 3, "step": 1, "label": "Columnas (escritorio)", "default": 3 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Esquema de color", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Espaciado superior", "default": 52 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Espaciado inferior", "default": 52 }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Reseña",
+      "settings": [
+        { "type": "range", "id": "stars", "min": 1, "max": 5, "step": 1, "label": "Estrellas", "default": 5 },
+        { "type": "textarea", "id": "text", "label": "Reseña", "default": "Mi perro se pasaba el día ladrando de aburrimiento. Con esta alfombra por fin está entretenido y tranquilo." },
+        { "type": "text", "id": "name", "label": "Nombre", "default": "Laura M." },
+        { "type": "text", "id": "badge", "label": "Etiqueta", "default": "Compra verificada" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Landing · Reseñas",
+      "blocks": [
+        { "type": "testimonial", "settings": { "stars": 5, "name": "Laura M.", "badge": "Compra verificada", "text": "Mi perro se aburría y destrozaba los cojines. Con esta alfombra pasa 20 minutos entretenido y luego se echa a dormir. ¡Brutal!" } },
+        { "type": "testimonial", "settings": { "stars": 5, "name": "Carlos R.", "badge": "Compra verificada", "text": "Comía demasiado rápido y vomitaba. Ahora tarda y disfruta. Además se lava en la lavadora sin problema." } },
+        { "type": "testimonial", "settings": { "stars": 5, "name": "Marta G.", "badge": "Compra verificada", "text": "La uso también con mi gato. Los dos alucinan buscando los premios. Calidad mucho mejor de la que esperaba." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
