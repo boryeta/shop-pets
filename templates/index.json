@@ -1,75 +1,108 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "featured_product": {
+      "type": "featured-product",
       "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
+        "title": { "type": "title" },
+        "reviews": {
+          "type": "text",
+          "settings": { "text": "<p>⭐⭐⭐⭐⭐ 4,9/5 · +1.200 clientes satisfechos</p>", "text_style": "body" }
         },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
+        "price": { "type": "price" },
+        "variant_picker": { "type": "variant_picker", "settings": { "picker_type": "button" } },
+        "quantity_selector": { "type": "quantity_selector" },
+        "buy_buttons": { "type": "buy_buttons", "settings": { "show_dynamic_checkout": true } },
+        "description": { "type": "description" }
       },
       "block_order": [
-        "heading",
-        "button"
+        "title",
+        "reviews",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "description"
       ],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "product": "",
+        "color_scheme": "scheme-1",
+        "media_position": "left",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "enable_sticky_info": true,
+        "padding_top": 36,
+        "padding_bottom": 12
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
-      }
-    }
+    "trust_bar": {
+      "type": "landing-trust-bar",
+      "blocks": {
+        "t1": { "type": "item", "settings": { "icon": "truck", "text": "Envío gratis" } },
+        "t2": { "type": "item", "settings": { "icon": "shield", "text": "Pago 100% seguro" } },
+        "t3": { "type": "item", "settings": { "icon": "refresh", "text": "Devolución en 30 días" } },
+        "t4": { "type": "item", "settings": { "icon": "paw", "text": "+10.000 mascotas felices" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": {}
+    },
+    "benefits": {
+      "type": "landing-benefits",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "brain", "title": "Estimula su mente", "text": "Convierte la comida en un juego de olfato que activa su instinto natural de forrajeo." } },
+        "b2": { "type": "benefit", "settings": { "icon": "heart", "title": "Reduce la ansiedad", "text": "Olfatear libera endorfinas: menos estrés, menos ladridos y menos destrozos en casa." } },
+        "b3": { "type": "benefit", "settings": { "icon": "clock", "title": "Come más despacio", "text": "Ralentiza la ingesta y mejora la digestión evitando que engulla la comida." } },
+        "b4": { "type": "benefit", "settings": { "icon": "wash", "title": "Fácil de lavar", "text": "Material apto para lavadora: lista para usar de nuevo en minutos." } },
+        "b5": { "type": "benefit", "settings": { "icon": "paw", "title": "Para perros y gatos", "text": "Apta para cualquier tamaño y raza. Diversión garantizada para toda la casa." } },
+        "b6": { "type": "benefit", "settings": { "icon": "leaf", "title": "Material seguro", "text": "Tejido suave y no tóxico, pensado para el contacto diario con tu mascota." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5", "b6"],
+      "settings": {}
+    },
+    "steps": {
+      "type": "landing-steps",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Esconde la comida", "text": "Reparte premios o pienso entre los pliegues de tela de la alfombra." } },
+        "s2": { "type": "step", "settings": { "title": "Deja que olfatee", "text": "Tu mascota usa su olfato para encontrar cada bocado: pura estimulación." } },
+        "s3": { "type": "step", "settings": { "title": "Mascota feliz y tranquila", "text": "Después del reto queda relajada, saciada y sin aburrimiento." } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "landing-testimonials",
+      "blocks": {
+        "r1": { "type": "testimonial", "settings": { "stars": 5, "name": "Laura M.", "badge": "Compra verificada", "text": "Mi perro se aburría y destrozaba los cojines. Con esta alfombra pasa 20 minutos entretenido y luego se echa a dormir. ¡Brutal!" } },
+        "r2": { "type": "testimonial", "settings": { "stars": 5, "name": "Carlos R.", "badge": "Compra verificada", "text": "Comía demasiado rápido y vomitaba. Ahora tarda y disfruta. Además se lava en la lavadora sin problema." } },
+        "r3": { "type": "testimonial", "settings": { "stars": 5, "name": "Marta G.", "badge": "Compra verificada", "text": "La uso también con mi gato. Los dos alucinan buscando los premios. Calidad mucho mejor de la que esperaba." } }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": {}
+    },
+    "guarantee": { "type": "landing-guarantee", "settings": {} },
+    "faq": {
+      "type": "landing-faq",
+      "blocks": {
+        "q1": { "type": "question", "settings": { "question": "¿Sirve para cualquier raza o tamaño?", "answer": "<p>Sí. Es apta para perros y gatos de cualquier tamaño. Los más grandes simplemente encontrarán los premios más rápido.</p>" } },
+        "q2": { "type": "question", "settings": { "question": "¿Es fácil de limpiar?", "answer": "<p>Muchísimo. Es apta para lavadora en frío; sacúdela y déjala secar al aire. Lista para el siguiente uso.</p>" } },
+        "q3": { "type": "question", "settings": { "question": "¿Cuánto tiempo la usa mi mascota?", "answer": "<p>Recomendamos sesiones de 10 a 20 minutos. Es ideal antes de que te vayas de casa para dejarla relajada.</p>" } },
+        "q4": { "type": "question", "settings": { "question": "¿Cuánto tarda el envío?", "answer": "<p>Preparamos tu pedido en 24-48 h y lo recibes en pocos días. Te enviamos el número de seguimiento por email.</p>" } },
+        "q5": { "type": "question", "settings": { "question": "¿Y si no le gusta a mi mascota?", "answer": "<p>Tienes 30 días para devolverla. Si no queda encantada, te devolvemos el dinero.</p>" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5"],
+      "settings": {}
+    },
+    "sticky_atc": { "type": "landing-sticky-atc", "settings": { "product": "" } }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "featured_product",
+    "trust_bar",
+    "benefits",
+    "steps",
+    "testimonials",
+    "guarantee",
+    "faq",
+    "sticky_atc"
   ]
 }

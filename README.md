@@ -97,6 +97,29 @@ snuffle mat / alfombra olfativa, y reutilizable para cualquier producto).
 > El precio, título e imágenes salen del **producto de Shopify**, no están escritos
 > en el código.
 
+## Modo mono-producto: la home ES la landing
+
+La página de inicio (`templates/index.json`) se ha convertido en la **landing
+directa de un solo producto**. Al entrar al dominio, el visitante cae en la
+página de venta (sin catálogo, sin home genérica).
+
+**Para activarlo:**
+
+1. En el **editor de temas** (Customize) sobre la **Home page**, abre la sección
+   **"Producto destacado"** y en **Producto** elige tu snuffle mat.
+2. Abre la sección **"Landing · Barra compra móvil"** y selecciona el **mismo
+   producto** (para que la barra fija muestre precio y botón correctos).
+3. Guarda. La home ya vende ese producto directamente.
+
+**Opcional — esconder navegación para maximizar conversión:**
+
+- Header: deja el menú vacío o reduce enlaces (Customize → Header).
+- Footer: quita menús innecesarios y deja solo enlaces legales (aviso legal,
+  privacidad, envíos, devoluciones).
+
+> Sigue existiendo también la plantilla `product.landing` por si algún día
+> quieres una página de producto aparte además de la home.
+
 ## Estructura
 
 Cuando el tema esté conectado, aparecerán las carpetas estándar de Shopify

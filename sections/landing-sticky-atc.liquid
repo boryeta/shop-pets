@@ -10,13 +10,19 @@
   @media screen and (min-width:750px){ .landing-sticky { display:none; } }
 {%- endstyle -%}
 
+{%- liquid
+  assign sticky_product = product
+  if sticky_product == blank and section.settings.product != blank
+    assign sticky_product = section.settings.product
+  endif
+-%}
 <div class="landing-sticky color-{{ section.settings.color_scheme }}" id="LandingSticky-{{ section.id }}">
   <div class="landing-sticky__inner">
     <div class="landing-sticky__info">
-      <div class="landing-sticky__title">{{ product.title | default: 'Tu producto' | escape }}</div>
+      <div class="landing-sticky__title">{{ sticky_product.title | default: 'Tu producto' | escape }}</div>
       <div class="landing-sticky__price">
-        {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s>{%- endif -%}
-        {{ product.price | default: 0 | money }}
+        {%- if sticky_product.compare_at_price > sticky_product.price -%}<s>{{ sticky_product.compare_at_price | money }}</s>{%- endif -%}
+        {{ sticky_product.price | default: 0 | money }}
       </div>
     </div>
     <button type="button" class="landing-sticky__btn button button--primary" data-landing-scroll>{{ section.settings.button_label | escape }}</button>
@@ -48,6 +54,7 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    { "type": "product", "id": "product", "label": "Producto (solo si se usa fuera de una página de producto, p. ej. en la home)" },
     { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Comprar" },
     { "type": "range", "id": "show_after", "min": 200, "max": 1200, "step": 50, "unit": "px", "label": "Mostrar tras desplazar", "default": 500 },
     { "type": "color_scheme", "id": "color_scheme", "label": "Esquema de color", "default": "scheme-1" }
